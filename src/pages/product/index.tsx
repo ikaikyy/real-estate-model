@@ -4,7 +4,6 @@ import Image from "@/Components/Image";
 import Banner from "@/Components/Banner";
 import Layout from "@/Components/Layout";
 import ContactForm from "@/Components/ContactForm";
-import images from "@/Components/Banner/images";
 
 const Product: React.FC = () => {
   return (
@@ -12,7 +11,7 @@ const Product: React.FC = () => {
       <Box className="main" display="flex" flexDirection="column" gap={8}>
         <Box w="100%" display="flex">
           <Box bg="#282828" minW="33%" minH="67%" />
-          <Banner size="67%" images={images} />
+          <Banner size="lg" />
         </Box>
         <Stack
           divider={<StackDivider borderColor="#282828" />}
