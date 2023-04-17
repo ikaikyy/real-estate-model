@@ -15,8 +15,10 @@ const HeaderNav: React.FC<Props> = ({ navLinks }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {
-    const isDesktop = window.innerWidth > 768;
-    setIsDesktop(isDesktop);
+    setIsDesktop(window.innerWidth > 768);
+    window.addEventListener("resize", () => {
+      setIsDesktop(window.innerWidth > 768);
+    });
   }, []);
 
   const handleIsOpen = () => {

@@ -10,8 +10,11 @@ import {
   Text,
   Textarea,
   Button,
+  Divider,
   Stack,
   StackDivider,
+  defineStyleConfig,
+  useStyleConfig,
 } from "@chakra-ui/react";
 import Image from "@/Components/Image";
 
@@ -36,6 +39,80 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+export const ContactFormStyle = defineStyleConfig({
+  baseStyle: {
+    display: "flex",
+    flexDirection: "column",
+    margin: "20px auto",
+    maxW: "768px",
+    w: "80vw",
+    fontSize: "md",
+    ".form-title": {
+      display: "flex",
+      justifyContent: "center",
+      fontSize: 36,
+      letterSpacing: 2,
+      textTransform: "uppercase",
+    },
+    ".form__input-container": {
+      display: "flex",
+      flexDirection: "column",
+      ".form__input-label": {
+        letterSpacing: 0.5,
+      },
+      ".form__input-group": {
+        display: "flex",
+        alignItems: "center",
+        ".form__input-icon": {
+          top: 1,
+          left: 0.5,
+        },
+        ".form__input": {
+          border: "1px solid #282828",
+          borderRadius: 0,
+          h: 12,
+          paddingRight: 4,
+          _hover: {},
+          _focusVisible: {},
+        },
+        ".error__border": {
+          border: "1px solid red",
+        },
+      },
+      ".error__label": {
+        color: "red.500",
+        fontSize: "sm",
+        letterSpacing: 0.5,
+      },
+    },
+    ".form__textarea": {
+      border: "1px solid #282828",
+      borderRadius: 0,
+      h: 120,
+      resize: "none",
+      padding: 2,
+    },
+    ".error__border": {
+      border: "1px solid red",
+    },
+    ".form__button": {
+      w: "100%",
+      bg: "#fafafa",
+      border: "1px solid #282828",
+      color: "#282828",
+      borderRadius: 0,
+      _hover: {
+        bg: "#282828",
+        color: "#fafafa",
+      },
+      ".form__button-text": {
+        fontWeight: 400,
+        textTransform: "uppercase",
+      },
+    },
+  },
+});
+
 const ContactForm: React.FC = () => {
   const {
     register,
@@ -44,140 +121,106 @@ const ContactForm: React.FC = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
+  const styles = useStyleConfig("ContactForm");
 
   return (
-    <Box
+    <Stack
+      __css={styles}
       as="form"
+      divider={<StackDivider borderColor="#282828" />}
       onSubmit={handleSubmit((data) => console.log(data))}
-      display="flex"
-      flexDirection="column"
-      margin=" 20px auto"
-      maxW="768px"
-      w="96vw"
-      fontSize="md"
     >
+      <Box className="form-title">/ Contato /</Box>
       <Stack divider={<StackDivider borderColor="transparent" />}>
-        <Box display="flex" justifyContent="center">
-          <Text fontSize={36} letterSpacing={2} textTransform="uppercase">
-            / Contato /
-          </Text>
-        </Box>
-        <Box display="flex" flexDirection="column">
-          <Text letterSpacing={0.5}>Nome completo</Text>
-          <InputGroup display="flex" alignItems="center">
-            <InputLeftElement top={1} left={0.5}>
+        <Box></Box>
+        <Box className="form__input-container">
+          <Text className="form__input-label">Nome completo</Text>
+          <InputGroup className="form__input-group">
+            <InputLeftElement className="form__input-icon">
               <Image
                 src="https://img.icons8.com/material-rounded/36/282828/user.png"
                 alt="user"
               />
             </InputLeftElement>
             <Input
-              placeholder="Nome..."
-              border={errors.name ? "1px solid red" : "1px solid #282828"}
-              borderRadius={0}
+              className={
+                errors.name ? "form__input error__border" : "form__input"
+              }
               size="lg"
-              _hover={{}}
-              _focusVisible={{}}
+              variant="unstyled"
               {...register("name")}
             />
           </InputGroup>
           {errors.name && (
-            <Text color="red.500" fontSize="sm" letterSpacing={0.5}>
-              {errors.name.message}
-            </Text>
+            <Text className="error__label">{errors.name.message}</Text>
           )}
         </Box>
-        <Box display="flex" flexDirection="column">
-          <Text letterSpacing={0.5}>Email para contato</Text>
-          <InputGroup>
-            <InputLeftElement top={1} left={0.5}>
+        <Box className="form__input-container">
+          <Text className="form__input-label">Email para contato</Text>
+          <InputGroup className="form__input-group">
+            <InputLeftElement className="form__input-icon">
               <Image
                 src="https://img.icons8.com/material-rounded/36/282828/mail.png"
                 alt="email"
               />
             </InputLeftElement>
             <Input
-              placeholder="Email..."
-              border={errors.email ? "1px solid red" : "1px solid #282828"}
-              borderRadius={0}
+              className={
+                errors.email ? "form__input error__border" : "form__input"
+              }
               size="lg"
-              _hover={{}}
-              _focusVisible={{}}
+              variant="unstyled"
               {...register("email")}
             />
           </InputGroup>
           {errors.email && (
-            <Text color="red.500" fontSize="sm" letterSpacing={0.5}>
-              {errors.email.message}
-            </Text>
+            <Text className="error__label">{errors.email.message}</Text>
           )}
         </Box>
-        <Box display="flex" flexDirection="column">
-          <Text letterSpacing={0.5}>Telefone para contato</Text>
-          <InputGroup>
-            <InputLeftElement top={1} left={0.5}>
+        <Box className="form__input-container">
+          <Text className="form__input-label">Telefone para contato</Text>
+          <InputGroup className="form__input-group">
+            <InputLeftElement className="form__input-icon">
               <Image
                 src="https://img.icons8.com/ios-filled/32/282828/phone.png"
                 alt="email"
               />
             </InputLeftElement>
             <Input
-              placeholder="Telefone..."
-              border={errors.phone ? "1px solid red" : "1px solid #282828"}
-              borderRadius={0}
+              className={
+                errors.phone ? "form__input error__border" : "form__input"
+              }
               size="lg"
-              _hover={{}}
-              _focusVisible={{}}
+              variant="unstyled"
               {...register("phone")}
             />
           </InputGroup>
           {errors.phone && (
-            <Text color="red.500" fontSize="sm" letterSpacing={0.5}>
-              {errors.phone.message}
-            </Text>
+            <Text className="error__label">{errors.phone.message}</Text>
           )}
         </Box>
-        <Box display="flex" flexDirection="column">
-          <Text letterSpacing={0.5}>Mensagem</Text>
+        <Box className="form__input-container">
+          <Text className="form__input-label">Mensagem</Text>
           <Textarea
-            placeholder="Mensagem..."
-            border={errors.message ? "1px solid red" : "1px solid #282828"}
-            borderRadius={0}
-            h={120}
-            size="lg"
-            resize="none"
+            className={
+              errors.message ? "form__textarea error__border" : "form__textarea"
+            }
             defaultValue="Olá, gostaria de receber mais informações sobre o imóvel."
-            _hover={{}}
-            _focusVisible={{}}
+            size="lg"
+            variant="unstyled"
             {...register("message")}
           />
           {errors.message && (
-            <Text color="red.500" fontSize="sm" letterSpacing={0.5}>
-              {errors.message.message}
-            </Text>
+            <Text className="error__label">{errors.message.message}</Text>
           )}
         </Box>
         <Box>
-          <Button
-            type="submit"
-            w="100%"
-            bg="#fafafa"
-            border="1px solid #282828"
-            color="#282828"
-            borderRadius={0}
-            size="lg"
-            _hover={{
-              bg: "#282828",
-              color: "#fafafa",
-            }}
-          >
-            <Text fontWeight={400} textTransform="uppercase">
-              Solicitar Contato
-            </Text>
+          <Button type="submit" className="form__button" size="lg">
+            <Text className="form__button-text">Solicitar Contato</Text>
           </Button>
         </Box>
       </Stack>
-    </Box>
+    </Stack>
   );
 };
 

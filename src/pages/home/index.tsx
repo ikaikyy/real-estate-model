@@ -15,7 +15,7 @@ const Home: React.FC = () => {
       </Head>
       <Layout>
         <Box className="main">
-          <Banner />
+          <Banner loop={true} apiPath="home" />
           <CardSlider cards={cards} />
           <ContactForm />
         </Box>

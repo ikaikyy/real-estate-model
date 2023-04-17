@@ -8,8 +8,10 @@ import "swiper/css/bundle";
 SwiperCore.use([Navigation, Pagination]);
 
 interface Props {
+  loop?: boolean;
   size?: string;
   slidesPerView?: number;
+  apiPath: string;
 }
 
 export const BannerStyle = defineStyleConfig({
@@ -67,7 +69,7 @@ const Banner: React.FC<Props> = (Props) => {
   const styles = useStyleConfig("Banner", { size });
 
   React.useEffect(() => {
-    fetch("/api/images", {
+    fetch(`/api/images/${Props.apiPath}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -77,18 +79,21 @@ const Banner: React.FC<Props> = (Props) => {
       .then((data) => {
         setImages(data.Images);
       });
-  }, []);
+  }, [Props.apiPath]);
 
   React.useEffect(() => {
-    const isDesktop = window.innerWidth > 768;
-    setIsDesktop(isDesktop);
+    setIsDesktop(window.innerWidth > 768);
+    window.addEventListener("resize", () => {
+      setIsDesktop(window.innerWidth > 768);
+    });
   }, []);
 
   return (
     <Box __css={styles}>
       <Swiper
-        loop={true}
+        loop={Props.loop}
         slidesPerView={slidesPerView}
+        spaceBetween={10}
         navigation={
           images.length > 1 && isDesktop
             ? {
@@ -101,7 +106,7 @@ const Banner: React.FC<Props> = (Props) => {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
-            <Image src={image.src} alt={image.alt} />
+            <Image src={image.src} alt={image.alt} size="100%" />
           </SwiperSlide>
         ))}
         {images.length > 1 && isDesktop ? (

@@ -3,6 +3,9 @@ import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 import { BannerStyle } from "@/Components/Banner";
 import { CardStyle } from "@/Components/Card";
 import { CardSliderStyle } from "@/Components/CardSlider";
+import { ContactFormStyle } from "@/Components/ContactForm";
+import { ImageContainerStyle } from "@/Components/ImageContainer";
+import { ProductInfoStyle } from "@/Components/ProductInfo";
 
 const theme = extendTheme({
   styles: {
@@ -21,6 +24,9 @@ const theme = extendTheme({
     Banner: BannerStyle,
     Card: CardStyle,
     CardSlider: CardSliderStyle,
+    ContactForm: ContactFormStyle,
+    ImageContainer: ImageContainerStyle,
+    ProductInfo: ProductInfoStyle,
   },
 });
 

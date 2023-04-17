@@ -1,35 +1,43 @@
 import React from "react";
 import { Box, Stack, StackDivider, Text } from "@chakra-ui/react";
-import Image from "@/Components/Image";
-import Banner from "@/Components/Banner";
 import Layout from "@/Components/Layout";
+import ProductInfo from "@/Components/ProductInfo";
+import Banner from "@/Components/Banner";
+import ImageContainer from "@/Components/ImageContainer";
 import ContactForm from "@/Components/ContactForm";
 
 const Product: React.FC = () => {
+  const [isDesktop, setIsDesktop] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(true);
+
+  React.useEffect(() => {
+    setIsDesktop(window.innerWidth > 1024);
+    setIsMobile(window.innerWidth < 512);
+    window.addEventListener("resize", () => {
+      setIsDesktop(window.innerWidth > 1024);
+      setIsMobile(window.innerWidth < 512);
+    });
+  }, []);
+
   return (
     <Layout navLinks={[{ label: "Home", href: "/home" }]}>
       <Box className="main" display="flex" flexDirection="column" gap={8}>
-        <Box w="100%" display="flex">
-          <Box bg="#282828" minW="33%" minH="67%" />
-          <Banner size="lg" />
-        </Box>
-        <Stack
-          divider={<StackDivider borderColor="#282828" />}
-          w="60%"
-          display="flex"
-          margin="auto"
-        >
-          <Box display="flex" alignItems="center" justifyContent="center">
-            <Text fontSize={36} letterSpacing={2} textTransform="uppercase">
-              / Planta /
-            </Text>
-          </Box>
-          <Image
-            src="https://i.pinimg.com/564x/ab/13/d8/ab13d89fd7db54058e8d6466c8ad0a9a.jpg"
-            alt="Planta"
-            size="100%"
+        <Box w="100%" display="flex" flexWrap="wrap">
+          <ProductInfo
+            title="Product Name"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et rutrum eros. Fusce mattis felis in mauris sodales posuere. Aliquam consequat elit et vestibulum hendrerit. Sed vel feugiat dui. Maecenas dictum facilisis lectus sed iaculis. Proin quis libero dictum, tempor ex ac, convallis mi. Mauris lacus dui, faucibus eu efficitur eu, accumsan ac erat. Mauris malesuada tortor et pharetra pulvinar. Proin dictum libero eget luctus facilisis. Nulla enim ipsum, ullamcorper."
+            size={isDesktop ? "lg" : isMobile ? "sm" : "md"}
           />
-        </Stack>
+          <Banner
+            apiPath="product"
+            size="xl"
+            slidesPerView={isDesktop ? 3 : isMobile ? 1 : 2}
+          />
+        </Box>
+        <ImageContainer
+          src="https://i.pinimg.com/564x/ab/13/d8/ab13d89fd7db54058e8d6466c8ad0a9a.jpg"
+          label="/ Planta /"
+        />
         <ContactForm />
       </Box>
     </Layout>
