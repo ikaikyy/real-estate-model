@@ -4,7 +4,9 @@ import { BannerStyle } from "@/Components/Banner";
 import { CardStyle } from "@/Components/Card";
 import { CardSliderStyle } from "@/Components/CardSlider";
 import { ContactFormStyle } from "@/Components/ContactForm";
+import { HeaderNavStyle } from "@/Components/HeaderNav";
 import { ImageContainerStyle } from "@/Components/ImageContainer";
+import { LayoutStyle } from "@/Components/Layout";
 import { ProductInfoStyle } from "@/Components/ProductInfo";
 
 const theme = extendTheme({
@@ -25,7 +27,9 @@ const theme = extendTheme({
     Card: CardStyle,
     CardSlider: CardSliderStyle,
     ContactForm: ContactFormStyle,
+    HeaderNav: HeaderNavStyle,
     ImageContainer: ImageContainerStyle,
+    Layout: LayoutStyle,
     ProductInfo: ProductInfoStyle,
   },
 });

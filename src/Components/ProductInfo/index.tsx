@@ -5,6 +5,7 @@ interface Props {
   title: string;
   description: string;
   size?: string;
+  sectionId?: string;
 }
 
 export const ProductInfoStyle = defineStyleConfig({
@@ -53,9 +54,11 @@ const ProductInfo: React.FC<Props> = (Props) => {
   const styles = useStyleConfig("ProductInfo", { size: Props.size });
 
   return (
-    <Box __css={styles}>
-      <Box className="title">{Props.title}</Box>
-      <Box className="description">{Props.description}</Box>
+    <Box as="section" id={Props.sectionId}>
+      <Box __css={styles}>
+        <Box className="title">{Props.title}</Box>
+        <Box className="description">{Props.description}</Box>
+      </Box>
     </Box>
   );
 };

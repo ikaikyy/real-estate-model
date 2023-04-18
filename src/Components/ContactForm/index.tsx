@@ -124,103 +124,107 @@ const ContactForm: React.FC = () => {
   const styles = useStyleConfig("ContactForm");
 
   return (
-    <Stack
-      __css={styles}
-      as="form"
-      divider={<StackDivider borderColor="#282828" />}
-      onSubmit={handleSubmit((data) => console.log(data))}
-    >
-      <Box className="form-title">/ Contato /</Box>
-      <Stack divider={<StackDivider borderColor="transparent" />}>
-        <Box></Box>
-        <Box className="form__input-container">
-          <Text className="form__input-label">Nome completo</Text>
-          <InputGroup className="form__input-group">
-            <InputLeftElement className="form__input-icon">
-              <Image
-                src="https://img.icons8.com/material-rounded/36/282828/user.png"
-                alt="user"
+    <Box as="section" id="contact-form">
+      <Stack
+        __css={styles}
+        as="form"
+        divider={<StackDivider borderColor="#282828" />}
+        onSubmit={handleSubmit((data) => console.log(data))}
+      >
+        <Box className="form-title">/ Contato /</Box>
+        <Stack divider={<StackDivider borderColor="transparent" />}>
+          <Box></Box>
+          <Box className="form__input-container">
+            <Text className="form__input-label">Nome completo</Text>
+            <InputGroup className="form__input-group">
+              <InputLeftElement className="form__input-icon">
+                <Image
+                  src="https://img.icons8.com/material-rounded/36/282828/user.png"
+                  alt="user"
+                />
+              </InputLeftElement>
+              <Input
+                className={
+                  errors.name ? "form__input error__border" : "form__input"
+                }
+                size="lg"
+                variant="unstyled"
+                {...register("name")}
               />
-            </InputLeftElement>
-            <Input
+            </InputGroup>
+            {errors.name && (
+              <Text className="error__label">{errors.name.message}</Text>
+            )}
+          </Box>
+          <Box className="form__input-container">
+            <Text className="form__input-label">Email para contato</Text>
+            <InputGroup className="form__input-group">
+              <InputLeftElement className="form__input-icon">
+                <Image
+                  src="https://img.icons8.com/material-rounded/36/282828/mail.png"
+                  alt="email"
+                />
+              </InputLeftElement>
+              <Input
+                className={
+                  errors.email ? "form__input error__border" : "form__input"
+                }
+                size="lg"
+                variant="unstyled"
+                {...register("email")}
+              />
+            </InputGroup>
+            {errors.email && (
+              <Text className="error__label">{errors.email.message}</Text>
+            )}
+          </Box>
+          <Box className="form__input-container">
+            <Text className="form__input-label">Telefone para contato</Text>
+            <InputGroup className="form__input-group">
+              <InputLeftElement className="form__input-icon">
+                <Image
+                  src="https://img.icons8.com/ios-filled/32/282828/phone.png"
+                  alt="email"
+                />
+              </InputLeftElement>
+              <Input
+                className={
+                  errors.phone ? "form__input error__border" : "form__input"
+                }
+                size="lg"
+                variant="unstyled"
+                {...register("phone")}
+              />
+            </InputGroup>
+            {errors.phone && (
+              <Text className="error__label">{errors.phone.message}</Text>
+            )}
+          </Box>
+          <Box className="form__input-container">
+            <Text className="form__input-label">Mensagem</Text>
+            <Textarea
               className={
-                errors.name ? "form__input error__border" : "form__input"
+                errors.message
+                  ? "form__textarea error__border"
+                  : "form__textarea"
               }
+              defaultValue="Olá, gostaria de receber mais informações sobre o imóvel."
               size="lg"
               variant="unstyled"
-              {...register("name")}
+              {...register("message")}
             />
-          </InputGroup>
-          {errors.name && (
-            <Text className="error__label">{errors.name.message}</Text>
-          )}
-        </Box>
-        <Box className="form__input-container">
-          <Text className="form__input-label">Email para contato</Text>
-          <InputGroup className="form__input-group">
-            <InputLeftElement className="form__input-icon">
-              <Image
-                src="https://img.icons8.com/material-rounded/36/282828/mail.png"
-                alt="email"
-              />
-            </InputLeftElement>
-            <Input
-              className={
-                errors.email ? "form__input error__border" : "form__input"
-              }
-              size="lg"
-              variant="unstyled"
-              {...register("email")}
-            />
-          </InputGroup>
-          {errors.email && (
-            <Text className="error__label">{errors.email.message}</Text>
-          )}
-        </Box>
-        <Box className="form__input-container">
-          <Text className="form__input-label">Telefone para contato</Text>
-          <InputGroup className="form__input-group">
-            <InputLeftElement className="form__input-icon">
-              <Image
-                src="https://img.icons8.com/ios-filled/32/282828/phone.png"
-                alt="email"
-              />
-            </InputLeftElement>
-            <Input
-              className={
-                errors.phone ? "form__input error__border" : "form__input"
-              }
-              size="lg"
-              variant="unstyled"
-              {...register("phone")}
-            />
-          </InputGroup>
-          {errors.phone && (
-            <Text className="error__label">{errors.phone.message}</Text>
-          )}
-        </Box>
-        <Box className="form__input-container">
-          <Text className="form__input-label">Mensagem</Text>
-          <Textarea
-            className={
-              errors.message ? "form__textarea error__border" : "form__textarea"
-            }
-            defaultValue="Olá, gostaria de receber mais informações sobre o imóvel."
-            size="lg"
-            variant="unstyled"
-            {...register("message")}
-          />
-          {errors.message && (
-            <Text className="error__label">{errors.message.message}</Text>
-          )}
-        </Box>
-        <Box>
-          <Button type="submit" className="form__button" size="lg">
-            <Text className="form__button-text">Solicitar Contato</Text>
-          </Button>
-        </Box>
+            {errors.message && (
+              <Text className="error__label">{errors.message.message}</Text>
+            )}
+          </Box>
+          <Box>
+            <Button type="submit" className="form__button" size="lg">
+              <Text className="form__button-text">Solicitar Contato</Text>
+            </Button>
+          </Box>
+        </Stack>
       </Stack>
-    </Stack>
+    </Box>
   );
 };
 

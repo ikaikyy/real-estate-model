@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Box } from "@chakra-ui/react";
+import { Box, defineStyleConfig, useStyleConfig } from "@chakra-ui/react";
 import Image from "@/Components/Image";
 
 interface Props {
@@ -8,54 +8,66 @@ interface Props {
     label: string;
     href: string;
   }[];
+  variant?: "desktop" | "mobile";
 }
 
-const HeaderNav: React.FC<Props> = ({ navLinks }) => {
-  const [isDesktop, setIsDesktop] = React.useState(false);
-  const [isOpen, setIsOpen] = React.useState(false);
+export const HeaderNavStyle = defineStyleConfig({
+  baseStyle: {},
+  variants: {
+    desktop: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      fontWeight: 400,
+      gap: 5,
+      ".link": {
+        position: "relative",
+        _after: {
+          transition: "all 0.3s ease-in-out",
+          content: '""',
+          display: "block",
+          w: 0,
+          h: "1px",
+          bgColor: "#fafafa",
+          position: "absolute",
+          left: "100%",
+        },
+        _hover: {
+          _after: {
+            w: "100%",
+            left: 0,
+          },
+        },
+      },
+      mobile: {
+        ".menu": {
+          w: "30px",
+          h: "30px",
+          zIndex: 11,
+        },
+      },
+    },
+  },
+});
 
-  React.useEffect(() => {
-    setIsDesktop(window.innerWidth > 768);
-    window.addEventListener("resize", () => {
-      setIsDesktop(window.innerWidth > 768);
-    });
-  }, []);
+const HeaderNav: React.FC<Props> = (Props) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const styles = useStyleConfig("HeaderNav", { variant: Props.variant });
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
   };
 
-  return isDesktop ? (
-    <Box
-      alignItems="center"
-      display="flex"
-      fontWeight={400}
-      gap={5}
-      justifyContent="space-between"
-    >
-      {navLinks
-        ? navLinks.map((link, index) => (
+  return Props.variant === "desktop" ? (
+    <Box __css={styles}>
+      {Props.navLinks
+        ? Props.navLinks.map((link, index) => (
             <Box
-              as="a"
-              href={link.href}
               key={index}
-              position="relative"
-              _after={{
-                transition: "all 0.3s ease-in-out",
-                content: '""',
-                display: "block",
-                width: 0,
-                height: "1px",
-                bgColor: "#fafafa",
-                position: "absolute",
-                left: "100%",
-              }}
-              _hover={{
-                _after: {
-                  width: "100%",
-                  left: 0,
-                },
-              }}
+              as="a"
+              className="link"
+              href={link.href}
+              onClick={handleIsOpen}
             >
               {link.label}
             </Box>
@@ -65,8 +77,8 @@ const HeaderNav: React.FC<Props> = ({ navLinks }) => {
   ) : (
     <>
       {isOpen ? (
-        <>
-          <Box as="button" w="30px" h="30px" onClick={handleIsOpen} zIndex={11}>
+        <Box __css={styles}>
+          <Box as="button" className="menu" onClick={handleIsOpen}>
             <Image
               src={
                 isOpen
@@ -77,46 +89,15 @@ const HeaderNav: React.FC<Props> = ({ navLinks }) => {
             />
           </Box>
           {ReactDOM.createPortal(
-            <Box
-              color="#fafafa"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              fontSize="xl"
-              justifyContent="center"
-              gap={5}
-              w="100%"
-              h="100vh"
-              bgColor="#282828"
-              position="fixed"
-              transition="all 0.3s ease-in-out"
-              top={0}
-              left={0}
-              zIndex={10}
-            >
-              {navLinks
-                ? navLinks.map((link, index) => (
+            <Box className="links-container">
+              {Props.navLinks
+                ? Props.navLinks.map((link, index) => (
                     <Box
-                      as="a"
-                      href={link.href}
                       key={index}
-                      position="relative"
-                      _after={{
-                        transition: "all 0.3s ease-in-out",
-                        content: '""',
-                        display: "block",
-                        width: 0,
-                        height: "1px",
-                        bgColor: "#fafafa",
-                        position: "absolute",
-                        left: "100%",
-                      }}
-                      _hover={{
-                        _after: {
-                          width: "100%",
-                          left: 0,
-                        },
-                      }}
+                      as="a"
+                      className="link"
+                      href={link.href}
+                      onClick={handleIsOpen}
                     >
                       {link.label}
                     </Box>
@@ -125,10 +106,10 @@ const HeaderNav: React.FC<Props> = ({ navLinks }) => {
             </Box>,
             document.querySelector(".main")!
           )}
-        </>
+        </Box>
       ) : (
-        <Box display="flex" alignItems="center">
-          <Box as="button" w="30px" h="30px" onClick={handleIsOpen}>
+        <Box __css={styles} display="flex" alignItems="center">
+          <Box as="button" className="menu" onClick={handleIsOpen}>
             <Image
               src={
                 isOpen

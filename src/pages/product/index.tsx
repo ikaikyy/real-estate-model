@@ -20,7 +20,13 @@ const Product: React.FC = () => {
   }, []);
 
   return (
-    <Layout navLinks={[{ label: "Home", href: "/home" }]}>
+    <Layout
+      navLinks={[
+        { label: "Home", href: "/home" },
+        { label: "Planta", href: "#plant" },
+        { label: "Contato", href: "#contact-form" },
+      ]}
+    >
       <Box className="main" display="flex" flexDirection="column" gap={8}>
         <Box w="100%" display="flex" flexWrap="wrap">
           <ProductInfo
@@ -37,6 +43,7 @@ const Product: React.FC = () => {
         <ImageContainer
           src="https://i.pinimg.com/564x/ab/13/d8/ab13d89fd7db54058e8d6466c8ad0a9a.jpg"
           label="/ Planta /"
+          sectionId="plant"
         />
         <ContactForm />
       </Box>

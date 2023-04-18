@@ -12,6 +12,7 @@ interface Props {
   size?: string;
   slidesPerView?: number;
   apiPath: string;
+  sectionId?: string;
 }
 
 export const BannerStyle = defineStyleConfig({
@@ -89,7 +90,7 @@ const Banner: React.FC<Props> = (Props) => {
   }, []);
 
   return (
-    <Box __css={styles}>
+    <Box as="section" id={Props.sectionId} __css={styles}>
       <Swiper
         loop={Props.loop}
         slidesPerView={slidesPerView}
