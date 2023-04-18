@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,7 @@ import {
   defineStyleConfig,
   useStyleConfig,
 } from "@chakra-ui/react";
+import InputMask from "react-input-mask";
 import Image from "@/Components/Image";
 
 const schema = z.object({
@@ -27,9 +28,11 @@ const schema = z.object({
   email: z.string().email("Email inválido").nonempty("Email é obrigatório"),
   phone: z
     .string()
-    .min(10, "Telefone deve ter no mínimo 10 caracteres")
-    .max(11, "Telefone deve ter no máximo 11 caracteres")
-    .nonempty("Telefone é obrigatório"),
+    .regex(
+      /^\(?([1-9][1-9])\)?\s*\d{4,5}\-?\d{4}$/,
+      "Telefone inválido. Use o formato '(11) 99999-9999'."
+    )
+    .default(""),
   message: z
     .string()
     .min(10, "Mensagem deve ter no mínimo 10 caracteres")
@@ -71,9 +74,15 @@ export const ContactFormStyle = defineStyleConfig({
           border: "1px solid #282828",
           borderRadius: 0,
           h: 12,
+          w: "100%",
           paddingRight: 4,
           _hover: {},
-          _focusVisible: {},
+          _focusVisible: {
+            outline: "none",
+          },
+        },
+        ".form__input-mask": {
+          paddingInlineStart: 10,
         },
         ".error__border": {
           border: "1px solid red",
@@ -147,7 +156,6 @@ const ContactForm: React.FC = () => {
                 className={
                   errors.name ? "form__input error__border" : "form__input"
                 }
-                size="lg"
                 variant="unstyled"
                 {...register("name")}
               />
@@ -169,7 +177,6 @@ const ContactForm: React.FC = () => {
                 className={
                   errors.email ? "form__input error__border" : "form__input"
                 }
-                size="lg"
                 variant="unstyled"
                 {...register("email")}
               />
@@ -187,12 +194,13 @@ const ContactForm: React.FC = () => {
                   alt="email"
                 />
               </InputLeftElement>
-              <Input
+              <InputMask
+                mask="(99) 99999-9999"
                 className={
-                  errors.phone ? "form__input error__border" : "form__input"
+                  errors.phone
+                    ? "form__input form__input-mask error__border"
+                    : "form__input form__input-mask"
                 }
-                size="lg"
-                variant="unstyled"
                 {...register("phone")}
               />
             </InputGroup>
@@ -209,7 +217,6 @@ const ContactForm: React.FC = () => {
                   : "form__textarea"
               }
               defaultValue="Olá, gostaria de receber mais informações sobre o imóvel."
-              size="lg"
               variant="unstyled"
               {...register("message")}
             />
@@ -218,7 +225,7 @@ const ContactForm: React.FC = () => {
             )}
           </Box>
           <Box>
-            <Button type="submit" className="form__button" size="lg">
+            <Button type="submit" className="form__button">
               <Text className="form__button-text">Solicitar Contato</Text>
             </Button>
           </Box>
