@@ -6,6 +6,7 @@ import { CardStyle } from "@/Components/Card";
 import { CardSliderStyle } from "@/Components/CardSlider";
 import { ContactFormStyle } from "@/Components/ContactForm";
 import { FooterStyle } from "@/Components/Footer";
+import { HeaderStyle } from "@/Components/Header";
 import { HeaderNavStyle } from "@/Components/HeaderNav";
 import { ImageContainerStyle } from "@/Components/ImageContainer";
 import { LayoutStyle } from "@/Components/Layout";
@@ -31,6 +32,7 @@ const theme = extendTheme({
     CardSlider: CardSliderStyle,
     ContactForm: ContactFormStyle,
     Footer: FooterStyle,
+    Header: HeaderStyle,
     HeaderNav: HeaderNavStyle,
     ImageContainer: ImageContainerStyle,
     Layout: LayoutStyle,

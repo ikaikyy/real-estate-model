@@ -9,6 +9,7 @@ SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 interface Props {
   loop?: boolean;
+  autoplay?: boolean;
   size?: string;
   slidesPerView?: number;
   apiPath: string;
@@ -112,7 +113,7 @@ const Banner: React.FC<Props> = (Props) => {
             : false
         }
         pagination={{ clickable: true }}
-        autoplay={{ delay: 8000 }}
+        autoplay={Props.autoplay ? { delay: 5000 } : false}
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>

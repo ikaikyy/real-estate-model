@@ -26,7 +26,6 @@ const Product: React.FC = () => {
   return (
     <Layout
       navLinks={[
-        { label: "Home", href: "/home" },
         { label: "Lazer", href: "#leisure" },
         { label: "Planta", href: "#plant" },
         { label: "Contato", href: "#contact-form" },

@@ -13,9 +13,9 @@ const Home: React.FC = () => {
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Layout>
+      <Layout navLinks={[{ label: "Contato", href: "#contact-form" }]}>
         <Box className="main">
-          <Banner loop={true} apiPath="home" />
+          <Banner loop={true} autoplay={true} apiPath="home" />
           <CardSlider cards={cards} />
           <ContactForm />
         </Box>
