@@ -10,7 +10,6 @@ import {
   Text,
   Textarea,
   Button,
-  Divider,
   Stack,
   StackDivider,
   defineStyleConfig,
@@ -140,7 +139,7 @@ const ContactForm: React.FC = () => {
         divider={<StackDivider borderColor="#282828" />}
         onSubmit={handleSubmit((data) => console.log(data))}
       >
-        <Box className="form-title">/ Contato /</Box>
+        <Box className="form-title">Contato</Box>
         <Stack divider={<StackDivider borderColor="transparent" />}>
           <Box></Box>
           <Box className="form__input-container">

@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 import { BannerStyle } from "@/Components/Banner";
+import { BannerLabelStyle } from "@/Components/BannerLabel";
 import { CardStyle } from "@/Components/Card";
 import { CardSliderStyle } from "@/Components/CardSlider";
 import { ContactFormStyle } from "@/Components/ContactForm";
@@ -24,6 +25,7 @@ const theme = extendTheme({
   },
   components: {
     Banner: BannerStyle,
+    BannerLabel: BannerLabelStyle,
     Card: CardStyle,
     CardSlider: CardSliderStyle,
     ContactForm: ContactFormStyle,

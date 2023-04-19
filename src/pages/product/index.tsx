@@ -3,17 +3,21 @@ import { Box, Stack, StackDivider, Text } from "@chakra-ui/react";
 import Layout from "@/Components/Layout";
 import ProductInfo from "@/Components/ProductInfo";
 import Banner from "@/Components/Banner";
+import BannerLabel from "@/Components/BannerLabel";
 import ImageContainer from "@/Components/ImageContainer";
 import ContactForm from "@/Components/ContactForm";
 
 const Product: React.FC = () => {
+  const [isBigScreen, setIsBigScreen] = React.useState(false);
   const [isDesktop, setIsDesktop] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(true);
 
   React.useEffect(() => {
+    setIsBigScreen(window.innerWidth > 1440);
     setIsDesktop(window.innerWidth > 1024);
     setIsMobile(window.innerWidth < 512);
     window.addEventListener("resize", () => {
+      setIsBigScreen(window.innerWidth > 1440);
       setIsDesktop(window.innerWidth > 1024);
       setIsMobile(window.innerWidth < 512);
     });
@@ -23,6 +27,7 @@ const Product: React.FC = () => {
     <Layout
       navLinks={[
         { label: "Home", href: "/home" },
+        { label: "Lazer", href: "#leisure" },
         { label: "Planta", href: "#plant" },
         { label: "Contato", href: "#contact-form" },
       ]}
@@ -40,9 +45,23 @@ const Product: React.FC = () => {
             slidesPerView={isDesktop ? 3 : isMobile ? 1 : 2}
           />
         </Box>
+        <BannerLabel label="Lazer" sectionId="leisure">
+          <Banner
+            apiPath="home"
+            height={
+              isBigScreen
+                ? "70vh"
+                : isDesktop
+                ? "50vh"
+                : isMobile
+                ? "30vh"
+                : "40vh"
+            }
+          />
+        </BannerLabel>
         <ImageContainer
           src="https://i.pinimg.com/564x/ab/13/d8/ab13d89fd7db54058e8d6466c8ad0a9a.jpg"
-          label="/ Planta /"
+          label="Planta"
           sectionId="plant"
         />
         <ContactForm />

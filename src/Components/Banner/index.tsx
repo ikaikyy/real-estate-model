@@ -12,13 +12,17 @@ interface Props {
   size?: string;
   slidesPerView?: number;
   apiPath: string;
-  sectionId?: string;
+  width?: string;
+  height?: string;
 }
 
 export const BannerStyle = defineStyleConfig({
   baseStyle: {
     w: "100%",
     h: "100%",
+    ".swiper": {
+      height: "inherit",
+    },
     ".swiper-pagination-bullets": {
       "--swiper-pagination-bullet-size": "8px",
       "--swiper-pagination-color": "#282828",
@@ -90,7 +94,11 @@ const Banner: React.FC<Props> = (Props) => {
   }, []);
 
   return (
-    <Box as="section" id={Props.sectionId} __css={styles}>
+    <Box
+      __css={styles}
+      w={Props.width ? `${Props.width} !important` : undefined}
+      h={Props.height ? `${Props.height} !important` : undefined}
+    >
       <Swiper
         loop={Props.loop}
         slidesPerView={slidesPerView}
