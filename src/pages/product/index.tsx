@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Layout from "@/Components/Layout";
 import ProductInfo from "@/Components/ProductInfo";
 import Banner from "@/Components/Banner";

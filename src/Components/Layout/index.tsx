@@ -66,7 +66,7 @@ const Layout: React.FC<Props> = (Props) => {
 
   return (
     <Box __css={styles} h="100%" w="100%">
-      <Header logo="Logo">
+      <Header>
         {Props.navLinks ? (
           <HeaderNav
             variant={isDesktop ? "desktop" : "mobile"}
