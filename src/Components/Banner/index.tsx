@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, defineStyleConfig, useStyleConfig } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination } from "swiper";
+import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import Image from "@/Components/Image";
 import "swiper/css/bundle";
 
-SwiperCore.use([Navigation, Pagination]);
+SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 interface Props {
   loop?: boolean;
@@ -112,6 +112,7 @@ const Banner: React.FC<Props> = (Props) => {
             : false
         }
         pagination={{ clickable: true }}
+        autoplay={{ delay: 8000 }}
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>

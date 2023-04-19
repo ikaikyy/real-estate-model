@@ -27,12 +27,14 @@ interface CardProps {
 export const CardStyle = defineStyleConfig({
   baseStyle: {
     ".chakra-card": {
+      "--card-bg": "#fafafa",
+      "--card-shadow": "none",
       borderRadius: 0,
       marginRight: 10,
       w: 290,
       _hover: {
         cursor: "pointer",
-        boxShadow: "5px 5px 10px 2px rgba(0, 0, 0, 0.3)",
+        boxShadow: "5px 5px 10px 2px rgba(0, 0, 0, 0.15)",
         ".chakra-card__footer-button": {
           bgColor: "#282828",
           color: "#fafafa",

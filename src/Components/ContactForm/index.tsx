@@ -105,6 +105,7 @@ export const ContactFormStyle = defineStyleConfig({
     },
     ".form__button": {
       w: "100%",
+      h: 12,
       bg: "#fafafa",
       border: "1px solid #282828",
       color: "#282828",
