@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
+  Button,
   Input,
   InputGroup,
   InputLeftElement,
   Text,
   Textarea,
-  Button,
+  Select,
   Stack,
   StackDivider,
   defineStyleConfig,
@@ -19,6 +20,12 @@ import InputMask from "react-input-mask";
 import Image from "@/Components/Image";
 
 const schema = z.object({
+  option: z
+    .string()
+    .nonempty("Selecione uma opção")
+    .refine((value) => value !== "none", {
+      message: "Selecione uma opção",
+    }),
   name: z
     .string()
     .min(3, "Nome deve ter no mínimo 3 caracteres")
@@ -87,6 +94,16 @@ export const ContactFormStyle = defineStyleConfig({
           border: "1px solid red",
         },
       },
+      ".form__select": {
+        border: "1px solid #282828",
+        borderRadius: 0,
+        h: 12,
+        w: "100%",
+        pl: 2,
+      },
+      ".error__border": {
+        border: "1px solid red",
+      },
       ".error__label": {
         color: "red.500",
         fontSize: "sm",
@@ -143,6 +160,29 @@ const ContactForm: React.FC = () => {
         <Box className="form-title">Contato</Box>
         <Stack divider={<StackDivider borderColor="transparent" />}>
           <Box></Box>
+          <Box className="form__input-container">
+            <Text className="form__input-label">
+              Qual meio de comunicação devemos usar?
+            </Text>
+            <Select
+              className={
+                errors.option ? "form__select error__border" : "form__select"
+              }
+              defaultValue="none"
+              variant="unstyled"
+              {...register("option")}
+            >
+              <option value="none" disabled>
+                Selecione uma opção de contato
+              </option>
+              <option value="email">Email</option>
+              <option value="phone">Telefone</option>
+              <option value="whatsapp">WhatsApp</option>
+            </Select>
+            {errors.option && (
+              <Text className="error__label">{errors.option.message}</Text>
+            )}
+          </Box>
           <Box className="form__input-container">
             <Text className="form__input-label">Nome completo</Text>
             <InputGroup className="form__input-group">
