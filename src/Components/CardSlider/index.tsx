@@ -57,9 +57,11 @@ const CardSlider: React.FC = () => {
   const styles = useStyleConfig("CardSlider");
 
   React.useEffect(() => {
-    fetch("/api/properties")
-      .then((res) => res.json())
-      .then((data) => setProperties(data));
+    const fetchProperties = async () => {
+      const apiResponse = await fetch("/api/properties");
+      return await apiResponse.json();
+    };
+    fetchProperties().then((response) => setProperties(response));
   }, []);
 
   return (
