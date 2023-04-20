@@ -12,16 +12,22 @@ import {
 } from "@chakra-ui/react";
 import Image from "@/Components/Image";
 
-interface CardProps {
-  image: {
-    src: string;
-    alt: string;
+interface Props {
+  property: {
+    id: string;
+    status: string;
+    type: string;
+    address: {
+      line: string;
+      city: string;
+      state: string;
+      lat: number;
+      long: number;
+    };
+    beds: number;
+    meters: number;
+    image: string;
   };
-  type: string;
-  title: string;
-  descriptions: {
-    text: string;
-  }[];
 }
 
 export const CardStyle = defineStyleConfig({
@@ -102,34 +108,36 @@ export const CardStyle = defineStyleConfig({
   },
 });
 
-const Card: React.FC<CardProps> = ({ image, type, title, descriptions }) => {
+const Card: React.FC<Props> = (Props) => {
   const styles = useStyleConfig("Card");
 
   return (
     <Box __css={styles}>
       <CardContainer
         onClick={() => {
-          window.location.href = "/product";
+          window.location.href = `/product?id=${Props.property.id}`;
         }}
       >
         <CardHeader padding={0}>
           <Box className="chakra-card__header-image">
-            <Image src={image.src} alt={image.alt} size="100%" />
+            <Image src={Props.property.image} alt="Property" size="100%" />
           </Box>
           <Box className="chakra-card__type">
-            {type === "residential" ? "residencial" : "comercial"}
+            {Props.property.status === "for_sale" ? "Vende-se" : "Aluga-se"}
           </Box>
         </CardHeader>
         <CardBody>
           <Stack divider={<StackDivider border="none" paddingTop={2} />}>
-            <Box className="chakra-card__body-title">{title}</Box>
+            <Box className="chakra-card__body-title">{`${
+              Props.property.type === "condo" ? "Apartamento" : "Casa"
+            } em ${Props.property.address.line}`}</Box>
             <Box className="chakra-card__body-description">
               <Image
                 src="https://img.icons8.com/material-rounded/24/282828/marker.png"
                 alt="local"
               />
               <Box className="chakra-card__body-description-text">
-                {descriptions[0].text}
+                {`${Props.property.address.city} - ${Props.property.address.state}`}
               </Box>
             </Box>
             <Box className="chakra-card__body-description">
@@ -138,7 +146,9 @@ const Card: React.FC<CardProps> = ({ image, type, title, descriptions }) => {
                 alt="room"
               />
               <Box className="chakra-card__body-description-text">
-                {descriptions[1].text}
+                {`${Props.property.beds} ${
+                  Props.property.beds > 1 ? "Quartos" : "Quarto"
+                }`}
               </Box>
             </Box>
             <Box className="chakra-card__body-description">
@@ -147,7 +157,7 @@ const Card: React.FC<CardProps> = ({ image, type, title, descriptions }) => {
                 alt="meters"
               />
               <Box className="chakra-card__body-description-text">
-                {descriptions[2].text}
+                {`${Props.property.meters}m²`}
               </Box>
             </Box>
           </Stack>

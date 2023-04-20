@@ -3,7 +3,6 @@ import { Box } from "@chakra-ui/react";
 import Layout from "@/Components/Layout";
 import Banner from "@/Components/Banner";
 import CardSlider from "@/Components/CardSlider";
-import cards from "@/Components/Card/cards";
 import ContactForm from "@/Components/ContactForm";
 
 const Home: React.FC = () => {
@@ -16,7 +15,7 @@ const Home: React.FC = () => {
       <Layout navLinks={[{ label: "Contato", href: "#contact-form" }]}>
         <Box className="main">
           <Banner loop={true} autoplay={true} apiPath="home" />
-          <CardSlider cards={cards} />
+          <CardSlider />
           <ContactForm />
         </Box>
       </Layout>

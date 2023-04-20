@@ -1,22 +1,8 @@
 import React from "react";
+import Card from "@/Components/Card";
 import { Box, defineStyleConfig, useStyleConfig } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Card from "@/Components/Card";
 import { Pagination, Navigation } from "swiper";
-
-interface CardSliderProps {
-  cards: {
-    image: {
-      src: string;
-      alt: string;
-    };
-    type: string;
-    title: string;
-    descriptions: {
-      text: string;
-    }[];
-  }[];
-}
 
 const sliderBreakpoints = {
   320: {
@@ -66,8 +52,15 @@ export const CardSliderStyle = defineStyleConfig({
   },
 });
 
-const CardSlider: React.FC<CardSliderProps> = ({ cards }) => {
+const CardSlider: React.FC = () => {
+  const [properties, setProperties] = React.useState([]);
   const styles = useStyleConfig("CardSlider");
+
+  React.useEffect(() => {
+    fetch("/api/properties")
+      .then((res) => res.json())
+      .then((data) => setProperties(data));
+  }, []);
 
   return (
     <Box __css={styles}>
@@ -77,14 +70,9 @@ const CardSlider: React.FC<CardSliderProps> = ({ cards }) => {
         pagination={{ clickable: true }}
         modules={[Pagination, Navigation]}
       >
-        {cards.map((card, index) => (
+        {properties.map((property, index) => (
           <SwiperSlide key={index} className="card-slider__slide">
-            <Card
-              image={card.image}
-              type={card.type}
-              title={card.title}
-              descriptions={card.descriptions}
-            />
+            <Card property={property} />
           </SwiperSlide>
         ))}
       </Swiper>
