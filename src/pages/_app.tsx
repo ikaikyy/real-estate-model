@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 import { BannerStyle } from "@/Components/Banner";
 import { BannerLabelStyle } from "@/Components/BannerLabel";
@@ -16,6 +16,7 @@ import { ProductInfoStyle } from "@/Components/ProductInfo";
 
 import PropertiesContext from "@/Contexts/PropertiesContext";
 
+import type { AppProps } from "next/app";
 import type { Property } from "@/Types";
 
 const theme = extendTheme({
@@ -47,17 +48,28 @@ const theme = extendTheme({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [properties, setProperties] = React.useState([] as Property[]);
+  const router = useRouter();
 
-  const getProperties = async () =>
-    await axios({
-      method: "GET",
-      url: `/api/properties`,
-    });
+  const [properties, setProperties] = React.useState([] as Property[]);
+  const [dataLoaded, setDataLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    getProperties().then((response) => setProperties(response.data));
-  }, []);
+    const getProperties = async () => {
+      await axios({
+        method: "GET",
+        url: `/api/properties`,
+      }).then((response) => setProperties(response.data));
+      setDataLoaded(true);
+    };
+
+    getProperties();
+  }, [dataLoaded, properties, router]);
+
+  React.useEffect(() => {
+    if (dataLoaded && !properties.length) {
+      router.reload();
+    }
+  });
 
   return (
     <ChakraProvider theme={theme}>
