@@ -12,6 +12,7 @@ import { HeaderStyle } from "@/Components/Header";
 import { HeaderNavStyle } from "@/Components/HeaderNav";
 import { ImageContainerStyle } from "@/Components/ImageContainer";
 import { LayoutStyle } from "@/Components/Layout";
+import { MapStyle } from "@/Components/Map";
 import { ProductInfoStyle } from "@/Components/ProductInfo";
 
 import PropertiesContext from "@/Contexts/PropertiesContext";
@@ -43,6 +44,7 @@ const theme = extendTheme({
     HeaderNav: HeaderNavStyle,
     ImageContainer: ImageContainerStyle,
     Layout: LayoutStyle,
+    Map: MapStyle,
     ProductInfo: ProductInfoStyle,
   },
 });

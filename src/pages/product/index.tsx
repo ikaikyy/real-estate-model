@@ -6,6 +6,7 @@ import ProductInfo from "@/Components/ProductInfo";
 import Banner from "@/Components/Banner";
 import BannerLabel from "@/Components/BannerLabel";
 import ImageContainer from "@/Components/ImageContainer";
+import Map from "@/Components/Map";
 import ContactForm from "@/Components/ContactForm";
 
 import PropertiesContext from "@/Contexts/PropertiesContext";
@@ -37,8 +38,8 @@ const Product: React.FC = () => {
   return (
     <Layout
       navLinks={[
-        { label: "Lazer", href: "#leisure" },
         { label: "Planta", href: "#plant" },
+        { label: "Localização", href: "#map" },
         { label: "Contato", href: "#contact-form" },
       ]}
     >
@@ -70,6 +71,16 @@ const Product: React.FC = () => {
           src="https://i.pinimg.com/564x/ab/13/d8/ab13d89fd7db54058e8d6466c8ad0a9a.jpg"
           label="Planta"
           sectionId="plant"
+        />
+        <Map
+          address={`${property.address.line.replace(
+            " ",
+            "+"
+          )},${property.address.city.replace(" ", "+")}+${
+            property.address.state_code
+          }`}
+          lat={property.address.lat}
+          lng={property.address.long}
         />
         <ContactForm />
       </Box>

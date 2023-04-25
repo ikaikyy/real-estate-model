@@ -6,6 +6,7 @@ export interface Property {
     line: string;
     city: string;
     state: string;
+    state_code: string;
     lat: number;
     long: number;
   };

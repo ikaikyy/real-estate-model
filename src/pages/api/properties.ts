@@ -35,6 +35,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
               line: property.listings[0].address.line,
               city: property.listings[0].address.city,
               state: property.listings[0].address.state,
+              state_code: property.listings[0].address.state_code,
               lat: property.listings[0].address.lat,
               long: property.listings[0].address.long,
             },
