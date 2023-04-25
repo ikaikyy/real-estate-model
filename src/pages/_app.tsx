@@ -1,3 +1,5 @@
+import axios from "axios";
+import React from "react";
 import type { AppProps } from "next/app";
 import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 import { BannerStyle } from "@/Components/Banner";
@@ -11,6 +13,10 @@ import { HeaderNavStyle } from "@/Components/HeaderNav";
 import { ImageContainerStyle } from "@/Components/ImageContainer";
 import { LayoutStyle } from "@/Components/Layout";
 import { ProductInfoStyle } from "@/Components/ProductInfo";
+
+import PropertiesContext from "@/Contexts/PropertiesContext";
+
+import type { Property } from "@/Types";
 
 const theme = extendTheme({
   styles: {
@@ -41,9 +47,23 @@ const theme = extendTheme({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [properties, setProperties] = React.useState([] as Property[]);
+
+  const getProperties = async () =>
+    await axios({
+      method: "GET",
+      url: `/api/properties`,
+    });
+
+  React.useEffect(() => {
+    getProperties().then((response) => setProperties(response.data));
+  }, []);
+
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <PropertiesContext.Provider value={properties}>
+        <Component {...pageProps} />
+      </PropertiesContext.Provider>
     </ChakraProvider>
   );
 }

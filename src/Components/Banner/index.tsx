@@ -2,8 +2,11 @@ import React from "react";
 import { Box, defineStyleConfig, useStyleConfig } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
+import AspectRatio from "react-aspect-ratio";
 import Image from "@/Components/Image";
 import "swiper/css/bundle";
+
+import type { ImageData } from "@/Types";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -12,15 +15,16 @@ interface Props {
   autoplay?: boolean;
   size?: string;
   slidesPerView?: number;
-  apiPath: string;
   width?: string;
   height?: string;
+  images: ImageData[];
 }
 
 export const BannerStyle = defineStyleConfig({
   baseStyle: {
     w: "100%",
     h: "100%",
+    margin: "0 auto",
     ".swiper": {
       height: "inherit",
     },
@@ -47,13 +51,18 @@ export const BannerStyle = defineStyleConfig({
   },
   sizes: {
     sm: {
-      w: "33%",
-    },
-    md: {
       w: "50%",
     },
+    md: {
+      w: "80%",
+    },
     lg: {
-      w: "67%",
+      w: "90%",
+      margin: "40px auto",
+      ".swiper-slide": {
+        h: 400,
+        w: "100%",
+      },
     },
     xl: {
       w: "100%",
@@ -63,29 +72,10 @@ export const BannerStyle = defineStyleConfig({
 
 const Banner: React.FC<Props> = (Props) => {
   const [isDesktop, setIsDesktop] = React.useState(false);
-  const [images, setImages] = React.useState([
-    {
-      src: "",
-      alt: "",
-    },
-  ]);
 
   const { size, slidesPerView } = Props;
 
   const styles = useStyleConfig("Banner", { size });
-
-  React.useEffect(() => {
-    fetch(`/api/images/${Props.apiPath}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setImages(data.Images);
-      });
-  }, [Props.apiPath]);
 
   React.useEffect(() => {
     setIsDesktop(window.innerWidth > 768);
@@ -105,7 +95,7 @@ const Banner: React.FC<Props> = (Props) => {
         slidesPerView={slidesPerView}
         spaceBetween={10}
         navigation={
-          images.length > 1 && isDesktop
+          isDesktop
             ? {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
@@ -115,12 +105,12 @@ const Banner: React.FC<Props> = (Props) => {
         pagination={{ clickable: true }}
         autoplay={Props.autoplay ? { delay: 5000 } : false}
       >
-        {images.map((image, index) => (
+        {Props.images.map((image, index) => (
           <SwiperSlide key={index}>
             <Image src={image.src} alt={image.alt} size="100%" />
           </SwiperSlide>
         ))}
-        {images.length > 1 && isDesktop ? (
+        {isDesktop ? (
           <>
             <Box
               bg="#282828"

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import Layout from "@/Components/Layout";
@@ -7,7 +8,13 @@ import BannerLabel from "@/Components/BannerLabel";
 import ImageContainer from "@/Components/ImageContainer";
 import ContactForm from "@/Components/ContactForm";
 
+import PropertiesContext from "@/Contexts/PropertiesContext";
+
 const Product: React.FC = () => {
+  const router = useRouter();
+  const property = React.useContext(PropertiesContext).find(
+    (property) => property.id === Number(router.query.id)
+  );
   const [isBigScreen, setIsBigScreen] = React.useState(false);
   const [isDesktop, setIsDesktop] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(true);
@@ -23,6 +30,10 @@ const Product: React.FC = () => {
     });
   }, []);
 
+  if (!property) {
+    return null;
+  }
+
   return (
     <Layout
       navLinks={[
@@ -34,30 +45,27 @@ const Product: React.FC = () => {
       <Box className="main" display="flex" flexDirection="column" gap={8}>
         <Box w="100%" display="flex" flexWrap="wrap">
           <ProductInfo
-            title="Product Name"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et rutrum eros. Fusce mattis felis in mauris sodales posuere. Aliquam consequat elit et vestibulum hendrerit. Sed vel feugiat dui. Maecenas dictum facilisis lectus sed iaculis. Proin quis libero dictum, tempor ex ac, convallis mi. Mauris lacus dui, faucibus eu efficitur eu, accumsan ac erat. Mauris malesuada tortor et pharetra pulvinar. Proin dictum libero eget luctus facilisis. Nulla enim ipsum, ullamcorper."
+            title={property.address.line}
+            descriptions={[
+              `${property.type === "condo" ? "Apartamento" : "Casa"} a ${
+                property.status === "for_sale" ? "venda" : "alugar"
+              } em: ${property.address.city} - ${property.address.state}`,
+              `Valor: $ ${property.price.toLocaleString("en-US")}`,
+              `Metragem: ${property.meters}m²`,
+              `Quartos: ${property.beds}`,
+              `Vagas: ${property.garages ? property.garages : "0"}`,
+            ]}
             size={isDesktop ? "lg" : isMobile ? "sm" : "md"}
           />
           <Banner
-            apiPath="product"
-            size="xl"
-            slidesPerView={isDesktop ? 3 : isMobile ? 1 : 2}
+            slidesPerView={isBigScreen ? 3 : isDesktop ? 2 : 1}
+            size="lg"
+            images={property.images.map((image) => ({
+              src: image.href,
+              alt: "image",
+            }))}
           />
         </Box>
-        <BannerLabel label="Lazer" sectionId="leisure">
-          <Banner
-            apiPath="home"
-            height={
-              isBigScreen
-                ? "70vh"
-                : isDesktop
-                ? "50vh"
-                : isMobile
-                ? "30vh"
-                : "40vh"
-            }
-          />
-        </BannerLabel>
         <ImageContainer
           src="https://i.pinimg.com/564x/ab/13/d8/ab13d89fd7db54058e8d6466c8ad0a9a.jpg"
           label="Planta"

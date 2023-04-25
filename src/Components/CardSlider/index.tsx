@@ -4,6 +4,8 @@ import { Box, defineStyleConfig, useStyleConfig } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
 
+import PropertiesContext from "@/Contexts/PropertiesContext";
+
 const sliderBreakpoints = {
   320: {
     slidesPerView: 1,
@@ -53,16 +55,8 @@ export const CardSliderStyle = defineStyleConfig({
 });
 
 const CardSlider: React.FC = () => {
-  const [properties, setProperties] = React.useState([]);
+  const properties = React.useContext(PropertiesContext);
   const styles = useStyleConfig("CardSlider");
-
-  React.useEffect(() => {
-    const fetchProperties = async () => {
-      const apiResponse = await fetch("/api/properties");
-      return await apiResponse.json();
-    };
-    fetchProperties().then((response) => setProperties(response));
-  }, []);
 
   return (
     <Box __css={styles}>

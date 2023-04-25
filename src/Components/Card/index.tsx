@@ -12,22 +12,10 @@ import {
 } from "@chakra-ui/react";
 import Image from "@/Components/Image";
 
+import type { Property } from "@/Types";
+
 interface Props {
-  property: {
-    id: string;
-    status: string;
-    type: string;
-    address: {
-      line: string;
-      city: string;
-      state: string;
-      lat: number;
-      long: number;
-    };
-    beds: number;
-    meters: number;
-    image: string;
-  };
+  property: Property;
 }
 
 export const CardStyle = defineStyleConfig({
@@ -120,7 +108,11 @@ const Card: React.FC<Props> = (Props) => {
       >
         <CardHeader padding={0}>
           <Box className="chakra-card__header-image">
-            <Image src={Props.property.image} alt="Property" size="100%" />
+            <Image
+              src={Props.property.images[0].href}
+              alt="Property"
+              size="100%"
+            />
           </Box>
           <Box className="chakra-card__type">
             {Props.property.status === "for_sale" ? "Vende-se" : "Aluga-se"}

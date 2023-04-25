@@ -3,7 +3,7 @@ import { Box, defineStyleConfig, useStyleConfig } from "@chakra-ui/react";
 
 interface Props {
   title: string;
-  description: string;
+  descriptions: string[];
   size?: string;
   sectionId?: string;
 }
@@ -54,10 +54,16 @@ const ProductInfo: React.FC<Props> = (Props) => {
   const styles = useStyleConfig("ProductInfo", { size: Props.size });
 
   return (
-    <Box as="section" id={Props.sectionId}>
-      <Box __css={styles}>
+    <Box __css={styles} as="section" id={Props.sectionId}>
+      <Box className="">
         <Box className="title">{Props.title}</Box>
-        <Box className="description">{Props.description}</Box>
+        <Box className="description">
+          {Props.descriptions.map((description, index) => (
+            <Box as="p" key={index}>
+              {description}
+            </Box>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
