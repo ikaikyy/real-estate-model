@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -11,6 +12,7 @@ import {
   Text,
   Textarea,
   Select,
+  Spinner,
   Stack,
   StackDivider,
   defineStyleConfig,
@@ -148,14 +150,32 @@ const ContactForm: React.FC = () => {
     resolver: zodResolver(schema),
   });
   const styles = useStyleConfig("ContactForm");
+  const [isSending, setIsSending] = React.useState(false);
+  const [isSent, setIsSent] = React.useState(false);
+
+  const sendEmail = async (data: FormValues) => {
+    setIsSending(true);
+    try {
+      await axios.post("/api/email", data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSent(true);
+      setIsSending(false);
+    }
+  };
 
   return (
     <Box as="section" id="contact-form">
       <Stack
         __css={styles}
         as="form"
+        action="/api/email"
+        method="POST"
+        onSubmit={handleSubmit((data) => {
+          sendEmail(data);
+        })}
         divider={<StackDivider borderColor="#282828" />}
-        onSubmit={handleSubmit((data) => console.log(data))}
       >
         <Box className="form-title">Contato</Box>
         <Stack divider={<StackDivider borderColor="transparent" />}>
@@ -264,11 +284,24 @@ const ContactForm: React.FC = () => {
               <Text className="error__label">{errors.message.message}</Text>
             )}
           </Box>
-          <Box>
-            <Button type="submit" className="form__button">
+          <Button type="submit" className="form__button">
+            {isSending ? (
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="#282828"
+                size="md"
+              />
+            ) : (
               <Text className="form__button-text">Solicitar Contato</Text>
-            </Button>
-          </Box>
+            )}
+          </Button>
+          {isSent && (
+            <Text color="green" margin="auto">
+              Email enviado!
+            </Text>
+          )}
         </Stack>
       </Stack>
     </Box>
