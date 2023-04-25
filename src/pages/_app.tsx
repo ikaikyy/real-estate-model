@@ -51,25 +51,22 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const [properties, setProperties] = React.useState([] as Property[]);
-  const [dataLoaded, setDataLoaded] = React.useState(false);
 
   React.useEffect(() => {
     const getProperties = async () => {
       await axios({
         method: "GET",
         url: `/api/properties`,
-      }).then((response) => setProperties(response.data));
-      setDataLoaded(true);
+      })
+        .then((response) => setProperties(response.data))
+        .catch((error) => {
+          console.error(error);
+          router.reload();
+        });
     };
 
     getProperties();
-  }, [dataLoaded, properties, router]);
-
-  React.useEffect(() => {
-    if (dataLoaded && !properties.length) {
-      router.reload();
-    }
-  });
+  }, [properties, router]);
 
   return (
     <ChakraProvider theme={theme}>
