@@ -4,7 +4,7 @@ import axios from "axios";
 
 import type { Property } from "@/Types";
 
-const { rapid_api_key } = process.env;
+const { RAPID_API_KEY } = process.env;
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -16,7 +16,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
       postal_code: "94105",
     },
     headers: {
-      "X-RapidAPI-Key": rapid_api_key,
+      "X-RapidAPI-Key": RAPID_API_KEY,
       "X-RapidAPI-Host": "real-estate-usa.p.rapidapi.com",
     },
   });

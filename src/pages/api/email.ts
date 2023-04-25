@@ -5,26 +5,20 @@ import nodemailer, { TransportOptions } from "nodemailer";
 const handler = nc<NextApiRequest, NextApiResponse>();
 
 handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    option: reqOption,
-    name: reqName,
-    email: reqEmail,
-    phone: reqPhone,
-    message: reqMessage,
-  } = req.body;
+  const { option, name, email, phone, message } = req.body;
 
-  const { email, password, client_id, client_secret, refresh_token } =
+  const { EMAIL, PASSWORD, CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } =
     process.env;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       type: "OAuth2",
-      user: email,
-      pass: password,
-      clientId: client_id,
-      clientSecret: client_secret,
-      refreshToken: refresh_token,
+      user: EMAIL,
+      pass: PASSWORD,
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      refreshToken: REFRESH_TOKEN,
     },
   } as TransportOptions);
 
@@ -37,23 +31,23 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   await transporter.sendMail({
-    from: email,
-    to: reqEmail,
+    from: EMAIL,
+    to: email,
     subject: "Aqui estão suas informações:",
     text: `
-      Opção de contato: ${reqOption}
-      Name: ${reqName}
-      Email: ${reqEmail}
-      Phone: ${reqPhone}
-      Message: ${reqMessage}
+      Opção de contato: ${option}
+      Name: ${name}
+      Email: ${email}
+      Phone: ${phone}
+      Message: ${message}
     `,
     html: `
       <h1>Aqui estão suas informações:</h1>
-      <p><strong>Opção de contato:</strong> ${reqOption}</p>
-      <p><strong>Nome:</strong> ${reqName}</p>
-      <p><strong>Email:</strong> ${reqEmail}</p>
-      <p><strong>Telefone:</strong> ${reqPhone}</p>
-      <p><strong>Mensagem:</strong> ${reqMessage}</p>
+      <p><strong>Opção de contato:</strong> ${option}</p>
+      <p><strong>Nome:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Telefone:</strong> ${phone}</p>
+      <p><strong>Mensagem:</strong> ${message}</p>
     `,
   });
 

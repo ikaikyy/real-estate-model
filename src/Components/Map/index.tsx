@@ -38,7 +38,11 @@ export const MapStyle = defineStyleConfig({
 
 const Map: React.FC<Props> = (Props) => {
   const styles = useStyleConfig("Map");
-  const { google_api_key } = process.env;
+  const [googleApiKey, setGoogleApiKey] = React.useState("");
+
+  React.useEffect(() => {
+    setGoogleApiKey(process.env.NEXT_PUBLIC_GOOGLE_API_KEY!);
+  }, [googleApiKey]);
 
   return (
     <Stack
@@ -53,7 +57,7 @@ const Map: React.FC<Props> = (Props) => {
         allowFullScreen
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        src={`https://www.google.com/maps/embed/v1/place?key=${google_api_key}
+        src={`https://www.google.com/maps/embed/v1/place?key=${googleApiKey}
     &q=${Props.address}&center=${Props.lat},${Props.lng}&zoom=16`}
       />
     </Stack>
