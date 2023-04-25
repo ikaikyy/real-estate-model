@@ -51,6 +51,7 @@ function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const [properties, setProperties] = React.useState([] as Property[]);
+  const [dataLoaded, setDataLoaded] = React.useState(false);
 
   React.useEffect(() => {
     const getProperties = async () => {
@@ -58,15 +59,19 @@ function App({ Component, pageProps }: AppProps) {
         method: "GET",
         url: `/api/properties`,
       })
-        .then((response) => setProperties(response.data))
+        .then((response) => {
+          setProperties(response.data);
+          setDataLoaded(true);
+        })
         .catch((error) => {
           console.error(error);
           router.reload();
         });
     };
-
-    getProperties();
-  }, [properties, router]);
+    if (!dataLoaded) {
+      getProperties();
+    }
+  }, [router, dataLoaded]);
 
   return (
     <ChakraProvider theme={theme}>

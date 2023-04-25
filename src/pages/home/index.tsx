@@ -20,7 +20,7 @@ const Home: React.FC = () => {
       });
 
     getBannerImages().then((response) => setBannerImages(response.data.Images));
-  });
+  }, []);
 
   return (
     <>
