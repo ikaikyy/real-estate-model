@@ -38,11 +38,9 @@ export const MapStyle = defineStyleConfig({
 
 const Map: React.FC<Props> = (Props) => {
   const styles = useStyleConfig("Map");
-  const [googleApiKey, setGoogleApiKey] = React.useState("");
-
-  React.useEffect(() => {
-    setGoogleApiKey(process.env.NEXT_PUBLIC_GOOGLE_API_KEY!);
-  }, [googleApiKey]);
+  const [googleApiKey] = React.useState(
+    process.env.NEXT_PUBLIC_GOOGLE_API_KEY!
+  );
 
   return (
     <Stack
