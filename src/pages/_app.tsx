@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { memo } from "react";
 import { useRouter } from "next/router";
 import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 import { BannerStyle } from "@/Components/Banner";
@@ -47,7 +47,7 @@ const theme = extendTheme({
   },
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const [properties, setProperties] = React.useState([] as Property[]);
@@ -76,3 +76,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </ChakraProvider>
   );
 }
+
+export default memo(App);
