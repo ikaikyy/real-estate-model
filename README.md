@@ -40,6 +40,8 @@ This is a NextJs project created as a model of a real estate site. I am developi
   - ::After/::Before
 - Zod for form validations
 - Axios
+- NodeMailer
+- Gmail API - OAuth 2.0
 
 ## About
 
