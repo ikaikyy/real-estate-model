@@ -1,5 +1,5 @@
 {
-  "name": "piloto2",
+  "name": "real-estate-model",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,7 +14,6 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@hookform/resolvers": "^3.0.1",
-    "@types/google-map-react": "^2.1.7",
     "@types/node": "18.15.11",
     "@types/nodemailer": "^6.4.7",
     "@types/react": "18.0.33",
@@ -28,7 +27,6 @@
     "next-connect": "^0.13.0",
     "nodemailer": "^6.9.1",
     "react": "18.2.0",
-    "react-aspect-ratio": "^1.1.6",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-icons": "^4.8.0",

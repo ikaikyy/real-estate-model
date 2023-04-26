@@ -2,7 +2,6 @@ import React from "react";
 import { Box, defineStyleConfig, useStyleConfig } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
-import AspectRatio from "react-aspect-ratio";
 import Image from "@/Components/Image";
 import "swiper/css/bundle";
 

@@ -2079,3 +2079,26 @@ export const properties = [
     ],
   },
 ];
+
+export const bannerImages = [
+  {
+    src: "https://www.imoveisan.com.br/assets/img/banner-slider-2.jpg",
+    alt: "banner",
+  },
+  {
+    src: "https://wallpapercave.com/wp/wp6671666.jpg",
+    alt: "banner",
+  },
+  {
+    src: "https://wallpaperaccess.com/full/1859246.jpg",
+    alt: "banner",
+  },
+  {
+    src: "https://images7.alphacoders.com/462/462294.jpg",
+    alt: "banner",
+  },
+  {
+    src: "https://s1.1zoom.me/b5050/739/Houses_Pools_Mansion_442870_1920x1080.jpg",
+    alt: "banner",
+  },
+];
